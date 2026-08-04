@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synovixura Tech — Software Engineering Studio</title>
+<meta name="description" content="Synovixura Tech designs and builds custom software, ERP systems, and internal dashboards for growing businesses.">
+
+<!-- Fonts: Space Grotesk for display, Inter for body, JetBrains Mono for data/labels -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ HEADER / NAV ============ -->
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark">S</span>
+      <span class="brand-name">Synovixura<span class="brand-suffix">Tech</span></span>
+    </a>
+
+    <nav class="main-nav" id="mainNav">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#projects">Work</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="#contact" class="btn btn-primary btn-sm">Start a Project</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="container hero-grid">
+
+      <div class="hero-copy">
+        <p class="eyebrow reveal">SOFTWARE ENGINEERING STUDIO</p>
+        <h1 class="hero-title reveal">We build the control panels behind growing businesses.</h1>
+        <p class="hero-sub reveal">Synovixura Tech designs and ships custom software, ERPs, and internal dashboards for teams that have outgrown spreadsheets. No bloated platforms. No six-month onboarding.</p>
+        <div class="hero-actions reveal">
+          <a href="#projects" class="btn btn-primary">View Our Work</a>
+          <a href="#contact" class="btn btn-ghost">Start a Project <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- Signature element: a live "system console" that mirrors the dashboards we build -->
+      <div class="hero-console reveal" aria-hidden="true">
+        <div class="console-head">
+          <span class="status-dot"></span>
+          <span class="console-label">SYSTEM STATUS — OPERATIONAL</span>
+        </div>
+        <div class="console-row">
+          <span class="console-key">Active Workflows</span>
+          <span class="console-value" id="consoleWorkflows">128</span>
+        </div>
+        <div class="console-row">
+          <span class="console-key">Uptime</span>
+          <span class="console-value">99.9%</span>
+        </div>
+        <div class="console-row">
+          <span class="console-key">Avg. Response</span>
+          <span class="console-value" id="consoleResponse">128ms</span>
+        </div>
+        <div class="console-divider"></div>
+        <div class="console-sparkline" id="sparkline">
+          <span style="--h:40%"></span><span style="--h:65%"></span><span style="--h:52%"></span>
+          <span style="--h:80%"></span><span style="--h:60%"></span><span style="--h:90%"></span>
+          <span style="--h:70%"></span><span style="--h:95%"></span>
+        </div>
+        <div class="console-caption">WEEKLY LOAD</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="about" id="about">
+    <div class="container about-grid">
+      <div class="about-text">
+        <p class="eyebrow reveal">ABOUT</p>
+        <h2 class="section-title reveal">We ship the tools your team actually uses every day.</h2>
+        <p class="reveal">Synovixura Tech is a small engineering studio that designs and builds internal software — ERPs, dashboards, and admin tools — for businesses that need something spreadsheets can't handle anymore. We work directly with the people who use the software, not just the people who buy it.</p>
+      </div>
+      <div class="about-values reveal">
+        <div class="value-item">
+          <span class="value-mark">—</span>
+          <div>
+            <h3>Small team, direct access</h3>
+            <p>You talk to the engineers building your system. No account managers in between.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <span class="value-mark">—</span>
+          <div>
+            <h3>Built around your workflow</h3>
+            <p>Every system is shaped by how your team actually works, not a generic template.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <span class="value-mark">—</span>
+          <div>
+            <h3>Support that doesn't end at launch</h3>
+            <p>We stay on after go-live to fix, extend, and tune the system as your business changes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section class="services" id="services">
+    <div class="container">
+      <p class="eyebrow reveal">SERVICES</p>
+      <h2 class="section-title reveal">What we build</h2>
+
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <i class="fa-solid fa-code service-icon"></i>
+          <h3>Custom Software Development</h3>
+          <p>Web and desktop applications built for your exact workflow, not a generic template.</p>
+        </div>
+        <div class="service-card reveal">
+          <i class="fa-solid fa-boxes-stacked service-icon"></i>
+          <h3>ERP &amp; Operations Systems</h3>
+          <p>Inventory, invoicing, and purchase tracking systems that keep your operations in one place.</p>
+        </div>
+        <div class="service-card reveal">
+          <i class="fa-solid fa-gauge-high service-icon"></i>
+          <h3>Dashboards &amp; Internal Tools</h3>
+          <p>Admin panels and reporting dashboards that turn raw data into decisions.</p>
+        </div>
+        <div class="service-card reveal">
+          <i class="fa-solid fa-cloud service-icon"></i>
+          <h3>Cloud &amp; DevOps</h3>
+          <p>Deployment, hosting, and infrastructure so your systems stay fast and stay online.</p>
+        </div>
+        <div class="service-card reveal">
+          <i class="fa-solid fa-pen-ruler service-icon"></i>
+          <h3>UI/UX Design</h3>
+          <p>Interfaces your team will actually enjoy using, from the first login onward.</p>
+        </div>
+        <div class="service-card reveal">
+          <i class="fa-solid fa-headset service-icon"></i>
+          <h3>Support &amp; Maintenance</h3>
+          <p>Direct access to the people who built your system, long after launch day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section class="projects" id="projects">
+    <div class="container">
+      <p class="eyebrow reveal">SELECTED WORK</p>
+      <h2 class="section-title reveal">Products we've shipped</h2>
+      <p class="section-sub reveal">Two internal platforms built for real operating teams. Click through to view the interface.</p>
+
+      <div class="projects-grid">
+
+        <!-- Project 1 -->
+        <article class="project-card reveal">
+          <a href="dashboard-1.html" target="_blank" rel="noopener" class="project-preview-link" aria-label="Open Orbit ERP dashboard preview">
+            <div class="project-preview preview-blue">
+              <div class="preview-chrome"><span></span><span></span><span></span></div>
+              <div class="preview-body">
+                <div class="preview-sidebar"></div>
+                <div class="preview-main">
+                  <div class="preview-topbar"></div>
+                  <div class="preview-stats">
+                    <div class="preview-stat"></div>
+                    <div class="preview-stat"></div>
+                    <div class="preview-stat"></div>
+                    <div class="preview-stat"></div>
+                  </div>
+                  <div class="preview-chart"></div>
+                </div>
+              </div>
+            </div>
+          </a>
+          <div class="project-info">
+            <span class="project-tag tag-blue">Operations Platform</span>
+            <h3>Orbit ERP</h3>
+            <p>An inventory, sales, and purchase management system built for retail and distribution businesses.</p>
+            <a href="dashboard-1.html" target="_blank" rel="noopener" class="project-link">View Dashboard <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project-card reveal">
+          <a href="dashboard-2.html" target="_blank" rel="noopener" class="project-preview-link" aria-label="Open Pulse CRM dashboard preview">
+            <div class="project-preview preview-amber">
+              <div class="preview-chrome"><span></span><span></span><span></span></div>
+              <div class="preview-body">
+                <div class="preview-sidebar"></div>
+                <div class="preview-main">
+                  <div class="preview-topbar"></div>
+                  <div class="preview-stats">
+                    <div class="preview-stat"></div>
+                    <div class="preview-stat"></div>
+                    <div class="preview-stat"></div>
+                    <div class="preview-stat"></div>
+                  </div>
+                  <div class="preview-chart"></div>
+                </div>
+              </div>
+            </div>
+          </a>
+          <div class="project-info">
+            <span class="project-tag tag-amber">Sales &amp; Customer Analytics</span>
+            <h3>Pulse CRM</h3>
+            <p>A customer and deals dashboard that gives sales teams a clear view of pipeline and performance.</p>
+            <a href="dashboard-2.html" target="_blank" rel="noopener" class="project-link">View Dashboard <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="contact" id="contact">
+    <div class="container contact-grid">
+      <div class="reveal">
+        <p class="eyebrow eyebrow-inverse">CONTACT</p>
+        <h2 class="section-title title-inverse">Have a system in mind?</h2>
+        <p class="contact-sub">Tell us what's slowing your team down. We'll tell you honestly if we can fix it.</p>
+      </div>
+
+      <div class="contact-details reveal">
+        <a href="mailto:hello@synovixura.tech" class="contact-row">
+          <i class="fa-solid fa-envelope"></i>
+          <span>hello@synovixura.tech</span>
+        </a>
+        <a href="tel:+910000000000" class="contact-row">
+          <i class="fa-solid fa-phone"></i>
+          <span>+91 00000 00000</span>
+        </a>
+        <div class="contact-row">
+          <i class="fa-solid fa-location-dot"></i>
+          <span>Rajasthan, India</span>
+        </div>
+        <a href="#contact" class="btn btn-primary btn-block">Send us a message</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="brand-mark">S</span>
+      <span class="brand-name">Synovixura<span class="brand-suffix">Tech</span></span>
+    </div>
+
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#projects">Work</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="#" aria-label="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <span>© 2026 Synovixura Tech. All rights reserved.</span>
+      <span class="footer-mono">BUILT WITH PRECISION</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
