@@ -1,7 +1,6 @@
 /* ==========================================================================
    SYNOVIXURA TECH — STYLESHEET
-   Organized by section. Edit design tokens in :root to restyle the whole
-   site. Sections are ordered to match the HTML top to bottom.
+   Bento Grid Themed
    ========================================================================== */
 
 /* ---------- 1. DESIGN TOKENS ---------- */
@@ -43,9 +42,10 @@
   --space-10: 128px;
 
   /* Radius */
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
 
   /* Motion */
   --ease: cubic-bezier(.4, 0, .2, 1);
@@ -124,7 +124,7 @@ textarea:focus-visible {
   }
 }
 
-/* ---------- 3. SHARED UI (buttons, eyebrows, reveal) ---------- */
+/* ---------- 3. SHARED UI ---------- */
 .eyebrow {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -144,8 +144,15 @@ textarea:focus-visible {
 .section-sub {
   color: var(--color-text-muted);
   max-width: 560px;
-  margin-bottom: var(--space-7);
   font-size: 17px;
+}
+
+.section-header {
+  margin-bottom: var(--space-7);
+}
+
+.section-header .section-sub {
+  margin-bottom: 0;
 }
 
 .btn {
@@ -180,7 +187,7 @@ textarea:focus-visible {
 .btn-sm { padding: 10px 20px; font-size: 14px; }
 .btn-block { width: 100%; justify-content: center; margin-top: var(--space-5); }
 
-/* Scroll reveal: elements fade + rise into view via script.js toggling .is-visible */
+/* Scroll reveal */
 .reveal {
   opacity: 0;
   transform: translateY(18px);
@@ -188,7 +195,78 @@ textarea:focus-visible {
 }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-/* ---------- 4. HEADER / NAV ---------- */
+/* ---------- 4. BENTO GRID SYSTEM ---------- */
+.bento-grid {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.bento-item {
+  background: var(--color-paper);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.bento-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(18, 21, 28, 0.08);
+  border-color: var(--color-blue);
+}
+
+[data-theme="dark"] .bento-item {
+  background: var(--color-paper);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .bento-item:hover {
+  border-color: var(--color-blue);
+}
+
+.bento-icon {
+  font-size: 24px;
+  color: var(--color-blue);
+  margin-bottom: var(--space-4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background: rgba(62, 106, 225, 0.08);
+}
+
+.bento-item h3 {
+  font-size: 17px;
+  margin-bottom: var(--space-2);
+}
+
+.bento-item p {
+  color: var(--color-text-muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.bento-tag {
+  display: inline-block;
+  margin-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: var(--color-paper-alt);
+  color: var(--color-text-muted);
+}
+
+/* Bento size variants */
+.bento-large { grid-column: span 2; }
+.bento-wide { grid-column: span 2; }
+.bento-tall { grid-row: span 2; }
+
+/* ---------- 5. HEADER / NAV ---------- */
 .site-header {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -327,7 +405,7 @@ textarea:focus-visible {
   background: var(--color-border-dark);
 }
 
-/* ---------- 5. HERO ---------- */
+/* ---------- 6. HERO ---------- */
 .hero {
   padding: calc(var(--header-h) + var(--space-9)) 0 var(--space-9);
   background:
@@ -359,7 +437,7 @@ textarea:focus-visible {
 }
 .hero-actions { display: flex; gap: var(--space-4); flex-wrap: wrap; }
 
-/* Signature element: system console card */
+/* Hero console card */
 .hero-console {
   background: var(--color-ink);
   border-radius: var(--radius-lg);
@@ -422,93 +500,88 @@ textarea:focus-visible {
   text-align: right;
 }
 
-/* ---------- 6. ABOUT ---------- */
+/* ---------- 7. ABOUT BENTO ---------- */
 .about { padding: var(--space-9) 0; }
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-9);
-}
-.about-text p:not(.eyebrow) {
-  color: var(--color-text-muted);
-  font-size: 17px;
-  max-width: 460px;
-}
-.about-values { display: flex; flex-direction: column; gap: var(--space-6); }
-.value-item { display: flex; gap: var(--space-4); }
-.value-mark {
-  font-family: var(--font-mono);
-  color: var(--color-amber-dim);
-  font-weight: 600;
-  flex-shrink: 0;
-}
-.value-item h3 { font-size: 17px; margin-bottom: var(--space-2); }
-.value-item p { color: var(--color-text-muted); font-size: 15px; }
 
-/* ---------- 7. SERVICES ---------- */
-.services { padding: var(--space-9) 0; background: var(--color-paper-alt); }
+.about-bento .bento-item {
+  background: var(--color-paper);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .about-bento .bento-item {
+  background: var(--color-paper);
+  border-color: var(--color-border);
+}
+
+.about-bento .bento-item .bento-icon {
+  background: rgba(232, 163, 61, 0.12);
+  color: var(--color-amber-dim);
+}
+
+.about-bento .bento-large {
+  background: linear-gradient(135deg, var(--color-amber), var(--color-amber-dim));
+  color: var(--color-ink);
+  border-color: transparent;
+}
+
+.about-bento .bento-large .bento-icon {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--color-ink);
+}
+
+.about-bento .bento-large p {
+  color: rgba(18, 21, 28, 0.8);
+}
+
+[data-theme="dark"] .about-bento .bento-large {
+  background: linear-gradient(135deg, var(--color-amber), var(--color-amber-dim));
+}
+
+/* ---------- 8. SERVICES BENTO ---------- */
+.services { 
+  padding: var(--space-9) 0; 
+  background: var(--color-paper-alt);
+}
 
 [data-theme="dark"] .services {
   background: var(--color-paper-alt);
 }
 
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-5);
-}
-.service-card {
+.services-bento .bento-item {
   background: var(--color-paper);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-6);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
-}
-.service-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 32px rgba(18, 21, 28, 0.08);
-  border-color: var(--color-blue);
 }
 
-[data-theme="dark"] .service-card {
+[data-theme="dark"] .services-bento .bento-item {
   background: var(--color-paper);
   border-color: var(--color-border);
 }
 
-[data-theme="dark"] .service-card:hover {
-  border-color: var(--color-blue);
+.services-bento .bento-tall {
+  grid-row: span 2;
 }
 
-.service-icon {
-  font-size: 22px;
+.services-bento .bento-tall .bento-icon {
+  background: rgba(62, 106, 225, 0.12);
   color: var(--color-blue);
-  margin-bottom: var(--space-5);
 }
-.service-card h3 { font-size: 17px; margin-bottom: var(--space-2); }
-.service-card p { color: var(--color-text-muted); font-size: 15px; }
 
-/* ---------- 8. PROJECTS ---------- */
+/* ---------- 9. PROJECTS BENTO ---------- */
 .projects { padding: var(--space-9) 0; }
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-6);
-}
-.project-card {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+
+.projects-bento .bento-item {
   background: var(--color-paper);
-}
-.project-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 24px 48px rgba(18, 21, 28, 0.12);
+  border: 1px solid var(--color-border);
 }
 
-[data-theme="dark"] .project-card {
+[data-theme="dark"] .projects-bento .bento-item {
   background: var(--color-paper);
   border-color: var(--color-border);
+}
+
+.project-card {
+  padding: 0;
+  overflow: hidden;
 }
 
 .project-preview-link { display: block; }
@@ -571,7 +644,7 @@ textarea:focus-visible {
 }
 .project-link:hover { gap: var(--space-3); color: var(--color-blue); }
 
-/* ---------- 9. CONTACT ---------- */
+/* ---------- 10. CONTACT ---------- */
 .contact { padding: var(--space-9) 0; background: var(--color-ink); }
 .contact-grid {
   display: grid;
@@ -598,7 +671,7 @@ textarea:focus-visible {
 a.contact-row:hover { border-color: var(--color-amber); background: rgba(232, 163, 61, 0.06); }
 .contact-row i { color: var(--color-amber); width: 18px; text-align: center; }
 
-/* ---------- 10. FOOTER ---------- */
+/* ---------- 11. FOOTER ---------- */
 .site-footer { background: var(--color-ink); border-top: 1px solid var(--color-border-dark); }
 .footer-inner {
   display: flex;
@@ -635,10 +708,7 @@ a.contact-row:hover { border-color: var(--color-amber); background: rgba(232, 16
 }
 .footer-mono { font-family: var(--font-mono); letter-spacing: 0.1em; font-size: 11px; }
 
-/* ==========================================================================
-   11. DASHBOARD PAGES (dashboard-1.html / dashboard-2.html)
-   Static UI only — mirrors the product previews shown on the landing page.
-   ========================================================================== */
+/* ---------- 12. DASHBOARD PAGES ---------- */
 .dash-body {
   background: var(--color-paper-alt);
   min-height: 100vh;
@@ -925,13 +995,23 @@ a.contact-row:hover { border-color: var(--color-amber); background: rgba(232, 16
 }
 .dash-back:hover { color: var(--color-text-inverse); }
 
-/* ---------- 12. RESPONSIVE ---------- */
+/* ---------- 13. RESPONSIVE ---------- */
 @media (max-width: 1024px) {
   .hero-grid,
-  .about-grid,
   .contact-grid { grid-template-columns: 1fr; }
   .hero-console { order: -1; }
-  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .bento-large,
+  .bento-wide {
+    grid-column: span 2;
+  }
+  .bento-tall {
+    grid-row: span 1;
+  }
+  
   .dash-shell { grid-template-columns: 220px 1fr; }
   .dash-stats { grid-template-columns: repeat(2, 1fr); }
   .dash-panels { grid-template-columns: 1fr; }
@@ -960,8 +1040,13 @@ a.contact-row:hover { border-color: var(--color-amber); background: rgba(232, 16
     border-bottom-color: var(--color-border);
   }
 
-  .services-grid,
-  .projects-grid { grid-template-columns: 1fr; }
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .bento-large,
+  .bento-wide {
+    grid-column: span 1;
+  }
 
   .footer-inner { flex-direction: column; align-items: flex-start; }
   .footer-bottom-inner { flex-direction: column; align-items: flex-start; }
