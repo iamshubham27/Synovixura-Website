@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse CRM — Dashboard Preview | Synovixura Tech</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<!-- Static UI only. No backend, no real data, no working links. -->
+<body class="dash-body">
+
+<div class="dash-shell" style="--dash-accent:#e8a33d">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="dash-sidebar">
+    <div class="dash-brand">
+      <span class="brand-mark">P</span>
+      <span class="brand-name">Pulse<span class="brand-suffix">CRM</span></span>
+    </div>
+
+    <nav class="dash-nav-group">
+      <span class="dash-nav-label">MAIN</span>
+      <a href="#" class="dash-nav-item is-active"><i class="fa-solid fa-gauge-high"></i> Overview</a>
+    </nav>
+
+    <nav class="dash-nav-group">
+      <span class="dash-nav-label">SALES</span>
+      <a href="#" class="dash-nav-item"><i class="fa-solid fa-diagram-project"></i> Pipeline</a>
+      <a href="#" class="dash-nav-item"><i class="fa-solid fa-handshake"></i> Deals</a>
+    </nav>
+
+    <nav class="dash-nav-group">
+      <span class="dash-nav-label">CUSTOMERS</span>
+      <a href="#" class="dash-nav-item"><i class="fa-solid fa-users"></i> All Customers</a>
+      <a href="#" class="dash-nav-item"><i class="fa-solid fa-layer-group"></i> Segments</a>
+    </nav>
+
+    <nav class="dash-nav-group">
+      <span class="dash-nav-label">REPORTS</span>
+      <a href="#" class="dash-nav-item"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+    </nav>
+
+    <nav class="dash-nav-group" style="margin-top: auto;">
+      <span class="dash-nav-label">ACCOUNT</span>
+      <a href="#" class="dash-nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+      <a href="index.html" class="dash-nav-item"><i class="fa-solid fa-arrow-left"></i> Back to site</a>
+    </nav>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="dash-main">
+
+    <!-- Top navbar -->
+    <header class="dash-topbar">
+      <div class="dash-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <span>Search customers, deals...</span>
+      </div>
+      <div class="dash-topbar-actions">
+        <a href="index.html" class="dash-back"><i class="fa-solid fa-arrow-left"></i> <span>Back to site</span></a>
+        <button class="dash-icon-btn" aria-label="Notifications"><i class="fa-regular fa-bell"></i><span class="dot"></span></button>
+        <div class="dash-profile">
+          <div class="dash-avatar">NK</div>
+          <div class="dash-profile-meta">
+            <div class="dash-profile-name">Neha Kapoor</div>
+            <div class="dash-profile-role">Sales Lead</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="dash-content">
+      <div>
+        <h1 class="dash-page-title">Sales Overview</h1>
+        <p class="dash-page-sub">Your pipeline and customer activity at a glance.</p>
+      </div>
+
+      <!-- Statistic cards -->
+      <div class="dash-stats">
+        <div class="dash-stat-card">
+          <div class="dash-stat-top">
+            <div class="dash-stat-icon"><i class="fa-solid fa-users"></i></div>
+            <span class="dash-stat-trend trend-up"><i class="fa-solid fa-arrow-trend-up"></i> 8.2%</span>
+          </div>
+          <div class="dash-stat-value">1,284</div>
+          <div class="dash-stat-label">Total Customers</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-top">
+            <div class="dash-stat-icon"><i class="fa-solid fa-handshake"></i></div>
+            <span class="dash-stat-trend trend-up"><i class="fa-solid fa-arrow-trend-up"></i> 4.6%</span>
+          </div>
+          <div class="dash-stat-value">96</div>
+          <div class="dash-stat-label">Active Deals</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-top">
+            <div class="dash-stat-icon"><i class="fa-solid fa-sack-dollar"></i></div>
+            <span class="dash-stat-trend trend-up"><i class="fa-solid fa-arrow-trend-up"></i> 15.3%</span>
+          </div>
+          <div class="dash-stat-value">₹9,64,200</div>
+          <div class="dash-stat-label">Monthly Revenue</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-top">
+            <div class="dash-stat-icon"><i class="fa-solid fa-bullseye"></i></div>
+            <span class="dash-stat-trend trend-down"><i class="fa-solid fa-arrow-trend-down"></i> 1.1%</span>
+          </div>
+          <div class="dash-stat-value">28.4%</div>
+          <div class="dash-stat-label">Conversion Rate</div>
+        </div>
+      </div>
+
+      <!-- Chart + Profile/Settings placeholder -->
+      <div class="dash-panels">
+        <div class="dash-panel">
+          <div class="dash-panel-head">
+            <h3>Deals Won vs. Lost</h3>
+            <span class="dash-panel-link">Last 8 weeks</span>
+          </div>
+          <div class="chart-placeholder">
+            <span style="--h:45%"></span><span style="--h:60%"></span><span style="--h:38%"></span>
+            <span style="--h:72%"></span><span style="--h:55%"></span><span style="--h:90%"></span>
+            <span style="--h:65%"></span><span style="--h:80%"></span>
+          </div>
+        </div>
+
+        <div class="dash-panel dash-profile-card">
+          <div class="dash-avatar">NK</div>
+          <h3 style="margin-top:4px;">Neha Kapoor</h3>
+          <p style="color:var(--color-text-muted); font-size:13px; margin-bottom:var(--space-5);">neha@pulsecrm.example</p>
+
+          <div class="settings-row">
+            <span>Deal reminders</span>
+            <div class="toggle is-on"></div>
+          </div>
+          <div class="settings-row">
+            <span>Weekly summary email</span>
+            <div class="toggle is-on"></div>
+          </div>
+          <div class="settings-row">
+            <span>Two-factor auth</span>
+            <div class="toggle"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table placeholder -->
+      <div class="dash-panel">
+        <div class="dash-panel-head">
+          <h3>Recent Customers</h3>
+          <span class="dash-panel-link">View all</span>
+        </div>
+        <table class="dash-table">
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Company</th>
+              <th>Deal Stage</th>
+              <th>Status</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="table-avatar">RB</span>Rohit Bansal</td>
+              <td>Bansal Traders</td>
+              <td>Negotiation</td>
+              <td><span class="status-pill status-pending">Pending</span></td>
+              <td>₹2,40,000</td>
+            </tr>
+            <tr>
+              <td><span class="table-avatar">PK</span>Priya Kulkarni</td>
+              <td>Kulkarni Textiles</td>
+              <td>Closed</td>
+              <td><span class="status-pill status-won">Won</span></td>
+              <td>₹1,10,500</td>
+            </tr>
+            <tr>
+              <td><span class="table-avatar">AJ</span>Arjun Jain</td>
+              <td>Jain Electronics</td>
+              <td>Proposal Sent</td>
+              <td><span class="status-pill status-pending">Pending</span></td>
+              <td>₹3,85,000</td>
+            </tr>
+            <tr>
+              <td><span class="table-avatar">SM</span>Sana Mirza</td>
+              <td>Mirza Logistics</td>
+              <td>Closed</td>
+              <td><span class="status-pill status-lost">Lost</span></td>
+              <td>₹75,000</td>
+            </tr>
+            <tr>
+              <td><span class="table-avatar">KT</span>Karan Thakur</td>
+              <td>Thakur Retail Group</td>
+              <td>Closed</td>
+              <td><span class="status-pill status-won">Won</span></td>
+              <td>₹1,92,300</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
