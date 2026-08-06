@@ -1,15 +1,13 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
 // Load environment variables
 dotenv.config();
 
-// Import models
-const Contact = require('./models/Contact');
+// Import Supabase client
+const supabase = require('./supabaseClient');
 
-// Initialize app
 const app = express();
 
 // ============ MIDDLEWARE ============
@@ -23,19 +21,25 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK', 
-    message: 'Server is running',
+    message: 'Server is running with Supabase',
     timestamp: new Date().toISOString()
   });
 });
 
-// Get all submissions (admin only)
+// Get all contacts
 app.get('/api/contacts', async (req, res) => {
   try {
-    const contacts = await Contact.find().sort({ createdAt: -1 });
+    const { data, error } = await supabase
+      .from('contacts')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+
     res.json({
       success: true,
-      count: contacts.length,
-      data: contacts
+      count: data.length,
+      data: data
     });
   } catch (error) {
     res.status(500).json({
@@ -49,16 +53,24 @@ app.get('/api/contacts', async (req, res) => {
 // Get single contact
 app.get('/api/contacts/:id', async (req, res) => {
   try {
-    const contact = await Contact.findById(req.params.id);
-    if (!contact) {
+    const { data, error } = await supabase
+      .from('contacts')
+      .select('*')
+      .eq('id', req.params.id)
+      .single();
+
+    if (error) throw error;
+
+    if (!data) {
       return res.status(404).json({
         success: false,
         message: 'Contact not found'
       });
     }
+
     res.json({
       success: true,
-      data: contact
+      data: data
     });
   } catch (error) {
     res.status(500).json({
@@ -69,7 +81,7 @@ app.get('/api/contacts/:id', async (req, res) => {
   }
 });
 
-// ============ CONTACT FORM SUBMISSION ============
+// Submit contact form
 app.post('/api/contact', async (req, res) => {
   try {
     const { name, email, company, service, message, budget } = req.body;
@@ -86,29 +98,32 @@ app.post('/api/contact', async (req, res) => {
     const ipAddress = req.headers['x-forwarded-for'] || req.ip || req.connection.remoteAddress;
     const userAgent = req.headers['user-agent'];
 
-    // Create contact entry
-    const contact = await Contact.create({
-      name,
-      email,
-      company: company || '',
-      service,
-      message,
-      budget: budget || '',
-      ipAddress,
-      userAgent
-    });
+    // Insert into Supabase
+    const { data, error } = await supabase
+      .from('contacts')
+      .insert([
+        {
+          name,
+          email,
+          company: company || '',
+          service,
+          message,
+          budget: budget || '',
+          ip_address: ipAddress,
+          user_agent: userAgent,
+          status: 'new'
+        }
+      ])
+      .select();
+
+    if (error) throw error;
 
     console.log(`📝 New contact submission from ${name} (${email})`);
-    console.log(`📊 Total submissions: ${await Contact.countDocuments()}`);
 
     res.status(201).json({
       success: true,
       message: 'Contact form submitted successfully!',
-      data: {
-        id: contact._id,
-        name: contact.name,
-        email: contact.email
-      }
+      data: data[0]
     });
 
   } catch (error) {
@@ -134,13 +149,16 @@ app.patch('/api/contacts/:id', async (req, res) => {
       });
     }
 
-    const contact = await Contact.findByIdAndUpdate(
-      req.params.id,
-      { status },
-      { new: true, runValidators: true }
-    );
+    const { data, error } = await supabase
+      .from('contacts')
+      .update({ status })
+      .eq('id', req.params.id)
+      .select()
+      .single();
 
-    if (!contact) {
+    if (error) throw error;
+
+    if (!data) {
       return res.status(404).json({
         success: false,
         message: 'Contact not found'
@@ -150,7 +168,7 @@ app.patch('/api/contacts/:id', async (req, res) => {
     res.json({
       success: true,
       message: 'Contact status updated',
-      data: contact
+      data: data
     });
   } catch (error) {
     res.status(500).json({
@@ -164,16 +182,26 @@ app.patch('/api/contacts/:id', async (req, res) => {
 // Delete contact
 app.delete('/api/contacts/:id', async (req, res) => {
   try {
-    const contact = await Contact.findByIdAndDelete(req.params.id);
-    if (!contact) {
+    const { data, error } = await supabase
+      .from('contacts')
+      .delete()
+      .eq('id', req.params.id)
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    if (!data) {
       return res.status(404).json({
         success: false,
         message: 'Contact not found'
       });
     }
+
     res.json({
       success: true,
-      message: 'Contact deleted successfully'
+      message: 'Contact deleted successfully',
+      data: data
     });
   } catch (error) {
     res.status(500).json({
@@ -184,35 +212,12 @@ app.delete('/api/contacts/:id', async (req, res) => {
   }
 });
 
-// ============ DATABASE CONNECTION ============
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI);
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
-    console.log(`📊 Database: ${conn.connection.name}`);
-  } catch (error) {
-    console.error(`❌ MongoDB Connection Error: ${error.message}`);
-    process.exit(1);
-  }
-};
-
 // ============ START SERVER ============
 const PORT = process.env.PORT || 5000;
 
-const startServer = async () => {
-  await connectDB();
-  
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
-    console.log(`📝 API endpoint: http://localhost:${PORT}/api/contact`);
-    console.log(`📊 View submissions: http://localhost:${PORT}/api/contacts`);
-  });
-};
-
-startServer();
-
-// ============ ERROR HANDLING ============
-process.on('unhandledRejection', (err) => {
-  console.error('❌ Unhandled Rejection:', err);
-  process.exit(1);
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`📝 API endpoint: http://localhost:${PORT}/api/contact`);
+  console.log(`📊 View submissions: http://localhost:${PORT}/api/contacts`);
+  console.log(`✅ Connected to Supabase`);
 });

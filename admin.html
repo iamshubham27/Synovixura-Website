@@ -72,7 +72,7 @@ async function loadSubmissions() {
   container.innerHTML = '<div class="loading">Loading submissions...</div>';
   
   try {
-    const response = await fetch('/api/contacts');
+    const response = await fetch('http://localhost:5000/api/contacts');
     const data = await response.json();
     
     if (data.success && data.data.length > 0) {
