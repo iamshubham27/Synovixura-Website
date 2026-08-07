@@ -13,9 +13,6 @@
 <!-- Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<!-- Supabase JS Library -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <link rel="stylesheet" href="style.css">
 
 <style>
@@ -670,15 +667,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // ===== SUPABASE CONFIGURATION =====
-  // REPLACE THESE WITH YOUR ACTUAL SUPABASE CREDENTIALS
-  const SUPABASE_URL = 'https://YOUR_PROJECT_ID.supabase.co';
-  const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
-  
-  // Initialize Supabase client
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-  // ===== CONTACT FORM WITH SUPABASE =====
+  // ===== CONTACT FORM (SECURE - USING BACKEND API) =====
   var form = document.getElementById('contactForm');
   var formContainer = document.getElementById('contactFormContainer');
   var successContainer = document.getElementById('formSuccess');
@@ -718,39 +707,40 @@ document.addEventListener('DOMContentLoaded', function() {
         budgetValue = 'Custom (amount not specified)';
       }
 
-      // Prepare data for Supabase
-      const formData = {
+      // Collect form data
+      var formData = {
         name: name,
         email: email,
-        company: document.getElementById('company').value.trim() || null,
+        company: document.getElementById('company').value.trim(),
         service: service,
         message: message,
-        budget: budgetValue || null,
-        created_at: new Date().toISOString()
+        budget: budgetValue
       };
 
       try {
-        // Insert into Supabase
-        const { data, error } = await supabase
-          .from('contacts')  // Make sure this table name matches your Supabase table
-          .insert([formData])
-          .select();
+        // ===== SEND TO BACKEND API (SECURE) =====
+        // This sends data to your server.js which then talks to Supabase securely
+        var response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
 
-        if (error) {
-          console.error('❌ Supabase error:', error);
-          throw new Error(error.message);
+        var data = await response.json();
+
+        if (response.ok) {
+          // Show success
+          formContainer.style.display = 'none';
+          successContainer.classList.add('show');
+          console.log('✅ Form submitted successfully!', data);
+        } else {
+          alert('Error: ' + data.message);
         }
-
-        console.log('✅ Data inserted successfully:', data);
-        
-        // Show success
-        formContainer.style.display = 'none';
-        successContainer.classList.add('show');
-
       } catch (error) {
         console.error('❌ Error submitting form:', error);
         alert('There was an error submitting your message. Please try again or email us directly.');
-        
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Message';

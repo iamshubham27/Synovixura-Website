@@ -11,6 +11,14 @@
   max-width: 1200px;
   margin: 0 auto;
 }
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 .admin-table {
   width: 100%;
   border-collapse: collapse;
@@ -54,29 +62,73 @@
   border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: 600;
-  margin-bottom: 20px;
+}
+.count-badge {
+  background: var(--color-amber);
+  color: var(--color-ink);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.back-link {
+  display: inline-block;
+  margin-bottom: 15px;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: 14px;
+}
+.back-link:hover {
+  color: var(--color-blue);
+}
+[data-theme="dark"] .back-link {
+  color: var(--color-text-inverse-muted);
+}
+[data-theme="dark"] .back-link:hover {
+  color: var(--color-amber);
 }
 </style>
 </head>
 <body class="dash-body">
 <div class="admin-page">
-  <h1>📬 Contact Submissions</h1>
-  <button class="refresh-btn" onclick="loadSubmissions()">🔄 Refresh</button>
+  <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to site</a>
+  
+  <div class="admin-header">
+    <h1>📬 Contact Submissions</h1>
+    <div>
+      <span class="count-badge" id="countBadge">0</span>
+      <button class="refresh-btn" onclick="loadSubmissions()">🔄 Refresh</button>
+    </div>
+  </div>
+  
   <div id="submissions">
     <div class="loading">Loading submissions...</div>
   </div>
 </div>
+
 <script>
 async function loadSubmissions() {
   const container = document.getElementById('submissions');
-  container.innerHTML = '<div class="loading">Loading submissions...</div>';
+  const countBadge = document.getElementById('countBadge');
+  
+  container.innerHTML = '<div class="loading">⏳ Loading submissions...</div>';
   
   try {
-    //production URL
+    // ===== SECURE: Using relative URL (works on localhost AND production) =====
     const response = await fetch('/api/contacts');
+    
+    // Check if response is OK
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
     const data = await response.json();
     
-    if (data.success && data.data.length > 0) {
+    // Update count badge
+    if (data.success && data.data) {
+      countBadge.textContent = data.data.length;
+    }
+    
+    if (data.success && data.data && data.data.length > 0) {
       let html = `
         <table class="admin-table">
           <thead>
@@ -84,6 +136,7 @@ async function loadSubmissions() {
               <th>#</th>
               <th>Name</th>
               <th>Email</th>
+              <th>Company</th>
               <th>Service</th>
               <th>Budget</th>
               <th>Status</th>
@@ -101,15 +154,20 @@ async function loadSubmissions() {
           'archived': 'status-archived'
         }[contact.status] || 'status-new';
         
+        // Fix: Use created_at (Supabase uses snake_case) or createdAt (MongoDB)
+        const dateField = contact.created_at || contact.createdAt;
+        const dateString = dateField ? new Date(dateField).toLocaleDateString() : 'N/A';
+        
         html += `
           <tr>
             <td>${index + 1}</td>
-            <td><strong>${contact.name}</strong></td>
-            <td><a href="mailto:${contact.email}">${contact.email}</a></td>
-            <td>${contact.service}</td>
+            <td><strong>${contact.name || 'N/A'}</strong></td>
+            <td><a href="mailto:${contact.email || ''}">${contact.email || 'N/A'}</a></td>
+            <td>${contact.company || '-'}</td>
+            <td>${contact.service || 'N/A'}</td>
             <td>${contact.budget || '-'}</td>
-            <td><span class="status-badge ${statusClass}">${contact.status}</span></td>
-            <td>${new Date(contact.createdAt).toLocaleDateString()}</td>
+            <td><span class="status-badge ${statusClass}">${contact.status || 'new'}</span></td>
+            <td>${dateString}</td>
           </tr>
         `;
       });
@@ -117,14 +175,41 @@ async function loadSubmissions() {
       html += '</tbody></table>';
       container.innerHTML = html;
     } else {
-      container.innerHTML = '<div class="error">No submissions found.</div>';
+      container.innerHTML = `
+        <div class="error">
+          <span style="font-size: 48px; display: block; margin-bottom: 10px;">📭</span>
+          No submissions found yet.<br>
+          <span style="font-size: 14px; color: var(--color-text-muted);">Submit a contact form to see data here.</span>
+        </div>
+      `;
     }
   } catch (error) {
-    container.innerHTML = `<div class="error">❌ Error loading submissions: ${error.message}<br><br>Make sure the server is running on http://localhost:5000</div>`;
+    console.error('❌ Error loading submissions:', error);
+    container.innerHTML = `
+      <div class="error">
+        ❌ Error loading submissions: ${error.message}
+        <br><br>
+        <span style="font-size: 14px; color: var(--color-text-muted);">
+          Make sure the server is running and the API is accessible.
+        </span>
+      </div>
+    `;
   }
 }
 
-loadSubmissions();
+// Load submissions when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  // Theme toggle
+  var currentTheme = localStorage.getItem('theme') || 'light';
+  if (currentTheme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+  
+  // Load submissions
+  loadSubmissions();
+});
+
+// Refresh button also loads submissions
 </script>
 </body>
 </html>
